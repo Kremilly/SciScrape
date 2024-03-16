@@ -2,6 +2,8 @@
 
 from enum import Enum
 
+from configs.settings import Settings
+
 class BuildUrls(Enum):
     
     BASE_URL = 'https://arxiv.org/'
@@ -10,7 +12,12 @@ class BuildUrls(Enum):
     
     @classmethod
     def api_search(self, search_term, max_results):
-        return f'{self.API_BASE.value}query?search_query=all:{search_term}&start=0&max_results={max_results}'
+        endpoint = f'{self.API_BASE.value}query?search_query=all:{search_term}&start=0&max_results={max_results}'
+        
+        if Settings.get('general.force_https') == True:
+            return endpoint.replace('http', 'https')
+        
+        return endpoint
     
     @classmethod
     def author_page_link(self, author_name):

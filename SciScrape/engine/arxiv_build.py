@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 from utils.str_utils import StrUtils
 
-from engine.build_urls import BuildUrls
+from configs.build_urls import BuildUrls
 
 class ArxivBuild:
     
