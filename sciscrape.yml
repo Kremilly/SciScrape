@@ -1,0 +1,24 @@
+general:
+  enable_repl: true # Boolean
+  force_https: false # Boolean
+  auto_reconnect: true # Boolean
+  show_statistics: true # Boolean
+
+  database: 
+    dsn: 'sqlite' # String
+    conn_string: './data/sciscrape.db' # String 
+
+results:
+  show_max_authors: 5 # Integer (unsigned)
+  default_max_results: 5 # Integer (unsigned)
+
+output:
+  default_format: 'json' # String
+  output_dest: './data/history' # String
+  downloads_folder: './data/papers' # String
+
+layout:
+  show_icons: false # Boolean
+  show_colors: true # Boolean
+  show_separators: true # Boolean
+  default_mode: 'visual' # String

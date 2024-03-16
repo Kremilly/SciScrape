@@ -5,17 +5,21 @@ import xml.etree.ElementTree as ET
 
 from utils.str_utils import StrUtils
 
-from arxiv.build_urls import BuildUrls
+from engine.build_urls import BuildUrls
 
-class AxivBuild:
+class ArxivBuild:
+    
+    @classmethod
+    def make_request(self, search: str, max_results: int) -> object:
+        url = BuildUrls.api_search(
+            search.replace(' ', '+'), max_results
+        )
+        
+        return requests.get(url)
     
     @classmethod
     def get_json(self, search: str, max_results: int) -> object:
-        url = BuildUrls.api_search(
-            search.replace('', '+'), max_results
-        )
-        
-        response = requests.get(url)
+        response = self.make_request(search, max_results)
 
         if response.status_code == 200:
             root = ET.fromstring(response.content)
@@ -29,21 +33,23 @@ class AxivBuild:
                     entry.find('{http://www.w3.org/2005/Atom}title').text
                 )
 
+                el_authors = entry.findall('{http://www.w3.org/2005/Atom}author')
                 article_data['authors'] = [
                     {
                         'name': StrUtils.fix_unicode_name(author), 
                         'link': BuildUrls.author_page_link(author)
                     } for author in [
-                        author.find('{http://www.w3.org/2005/Atom}name').text for author in entry.findall('{http://www.w3.org/2005/Atom}author')
+                        author.find('{http://www.w3.org/2005/Atom}name').text for author in el_authors
                     ]
                 ]
 
+                el_categories = entry.findall('{http://www.w3.org/2005/Atom}category')
                 article_data['categories'] = [
                     {
                         'name': category, 
                         'link': BuildUrls.category_search_link(category)
                     } for category in [
-                        category.get('term') for category in entry.findall('{http://www.w3.org/2005/Atom}category')
+                        category.get('term') for category in el_categories
                     ]
                 ]
 
@@ -76,10 +82,17 @@ class AxivBuild:
                 articles.append(article_data)
 
             return json.dumps({
-                'data': articles,
+                'articles': articles,
                 'status_code': response.status_code
             }, indent = 2)
         else:
             return json.dumps({
                 'status_code': response.status_code
             }, indent = 2)
+
+    @classmethod
+    def get_xml(self, search: str, max_results: int) -> object:
+        json_data = self.get_json(search, max_results)
+        xml_data = StrUtils.json_to_xml(json_data)
+        
+        return ET.tostring(xml_data, encoding = 'unicode')

@@ -10,7 +10,7 @@ class BuildUrls(Enum):
     
     @classmethod
     def api_search(self, search_term, max_results):
-        return f'{self.API_BASE.value}query?search_query={search_term}&max_results={max_results}'
+        return f'{self.API_BASE.value}query?search_query=all:{search_term}&start=0&max_results={max_results}'
     
     @classmethod
     def author_page_link(self, author_name):

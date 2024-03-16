@@ -8,7 +8,7 @@ class Regex(Enum):
     MAX_RESULTS = r'^[1-9]\d*$'
     
     @classmethod
-    def is_valid(self, value, type):
+    def is_valid(self, value, regex):
         return re.match(
-            self[type].value, value
+            self[regex].value, value
         ) is not None
