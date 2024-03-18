@@ -1,14 +1,16 @@
 #!/usr/bin/python3
 
 import re
-from enum import Enum
 
-class Regex(Enum):
+class Regex:
     
-    MAX_RESULTS = r'^[1-9]\d*$'
-    
+    STRING_TYPE = r"^.*$"
+    INT_TYPE = r"^[0-9]\d*$"
+    FLOAT_TYPE = r"^\d+\.\d+$"
+    BOOLEAN_TYPE = r"^(?i)(true|false)$"
+
     @classmethod
     def is_valid(self, value, regex):
         return re.match(
-            self[regex].value, value
+            self[regex.upper()], value
         ) is not None

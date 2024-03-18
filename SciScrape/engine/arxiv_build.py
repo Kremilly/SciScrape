@@ -93,6 +93,5 @@ class ArxivBuild:
     @classmethod
     def get_xml(self, search: str, max_results: int) -> object:
         json_data = self.get_json(search, max_results)
-        xml_data = StrUtils.json_to_xml(json_data)
-        
+        xml_data = StrUtils.json_to_xml(json_data)   
         return ET.tostring(xml_data, encoding = 'unicode')
