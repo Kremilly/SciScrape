@@ -19,7 +19,7 @@ class Icons(Enum):
 
     @classmethod
     def get(self, icon):
-        if Settings.get('layout.show_icons') == True:
+        if Settings.get('layout.show_icons', 'BOOLEAN'):
             return self[icon.upper()].value
         else:
             return f"[{icon.capitalize().replace('_', ' ')}]"
