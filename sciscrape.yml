@@ -1,13 +1,14 @@
 general:
   enable_repl: true # Boolean
   force_https: false # Boolean
+  enable_cache: true # Boolean
   auto_reconnect: true # Boolean
-  show_statistics: true # Boolean
+  calculate_request_time: true # Boolean
   default_user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36' # String
 
   database: 
     dsn: 'sqlite' # String
-    conn_string: './data/sciscrape.db' # String 
+    conn_string: './data/sciscrape.db' # String
 
 results:
   show_max_authors: 5 # Integer (unsigned)

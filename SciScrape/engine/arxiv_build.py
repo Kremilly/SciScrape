@@ -1,13 +1,24 @@
 #!/usr/bin/python3
 
-import json, requests
+import json, time, requests
+
 import xml.etree.ElementTree as ET
 
 from utils.str_utils import StrUtils
 
+from configs.settings import Settings
+
 from configs.build_urls import BuildUrls
 
 class ArxivBuild:
+    
+    @classmethod
+    def calculate_request_time(self, start_time: time, end_time: time) -> str:
+        elapsed_time_seconds = end_time - start_time
+        
+        return str(
+            round(elapsed_time_seconds * 1000)
+        )+ ' ms'
     
     @classmethod
     def make_request(self, search: str, max_results: int) -> object:
@@ -15,11 +26,20 @@ class ArxivBuild:
             search.replace(' ', '+'), max_results
         )
         
+        if Settings.get('general.enable_cache', 'BOOLEAN'):
+            return requests.get(url, headers={
+                'Cache-Control': 'no-cache'
+            })
+            
         return requests.get(url)
     
     @classmethod
     def get_json(self, search: str, max_results: int) -> object:
+        start_time = time.time()
+        
         response = self.make_request(search, max_results)
+        
+        end_time = time.time()
 
         if response.status_code == 200:
             root = ET.fromstring(response.content)
@@ -80,15 +100,19 @@ class ArxivBuild:
                 }
 
                 articles.append(article_data)
-
-            return json.dumps({
+                
+            results_data = {
                 'articles': articles,
-                'status_code': response.status_code
-            }, indent = 2)
+                'total': len(articles),
+                'status_code': response.status_code,
+            }
         else:
-            return json.dumps({
-                'status_code': response.status_code
-            }, indent = 2)
+            results_data['status_code'] = response.status_code
+            
+        if Settings.get('general.calculate_request_time', 'BOOLEAN'):
+            results_data['calculate_request_time'] = self.calculate_request_time(start_time, end_time)
+
+        return json.dumps(results_data, indent = 2)
 
     @classmethod
     def get_xml(self, search: str, max_results: int) -> object:
