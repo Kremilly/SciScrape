@@ -18,20 +18,24 @@ class ArxivBuild:
         
         return str(
             round(elapsed_time_seconds * 1000)
-        )+ ' ms'
+        ) + ' ms'
     
     @classmethod
     def make_request(self, search: str, max_results: int) -> object:
+        headers = {}
+        default_user_agent = Settings.get('general.default_user_agent', 'STRING')
+        
         url = BuildUrls.api_search(
             search.replace(' ', '+'), max_results
         )
         
+        if default_user_agent != '':
+            headers['User-Agent'] = default_user_agent
+        
         if Settings.get('general.enable_cache', 'BOOLEAN'):
-            return requests.get(url, headers={
-                'Cache-Control': 'no-cache'
-            })
-            
-        return requests.get(url)
+            headers['Cache-Control'] = 'no-cache'
+        
+        return requests.get(url, headers=headers)
     
     @classmethod
     def get_json(self, search: str, max_results: int) -> object:
