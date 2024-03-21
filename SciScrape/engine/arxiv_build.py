@@ -5,20 +5,15 @@ import json, time, requests
 import xml.etree.ElementTree as ET
 
 from utils.str_utils import StrUtils
+from utils.file_size import FileSize
 
 from configs.settings import Settings
 
 from configs.build_urls import BuildUrls
 
+from engine.arxiv_utils import ArxivUtils
+
 class ArxivBuild:
-    
-    @classmethod
-    def calculate_request_time(self, start_time: time, end_time: time) -> str:
-        elapsed_time_seconds = end_time - start_time
-        
-        return str(
-            round(elapsed_time_seconds * 1000)
-        ) + ' ms'
     
     @classmethod
     def make_request(self, search: str, max_results: int) -> object:
@@ -52,6 +47,8 @@ class ArxivBuild:
 
             for entry in root.findall('{http://www.w3.org/2005/Atom}entry'):
                 article_data = {}
+                
+                article_data['id'] = entry.find('{http://www.w3.org/2005/Atom}id').text.split('/')[-1]
 
                 article_data['title'] = StrUtils.clean_string(
                     entry.find('{http://www.w3.org/2005/Atom}title').text
@@ -87,15 +84,26 @@ class ArxivBuild:
                     link_href = link.get('href')
                     
                     if link_type == 'pdf':
-                        article_links['pdf'] = link_href
-                        article_links['src'] = BuildUrls.source_link(link_href)
+                        pdf_link = link_href
+                        src_link = BuildUrls.source_link(link_href)
                         
+                        article_links['pdf'] = {
+                            'link': pdf_link,
+                            'size': FileSize.remote_file(pdf_link),
+                            'pages': ArxivUtils.get_pdf_page_count(pdf_link),
+                        }
+                        
+                        article_links['src'] = {
+                            'link': src_link,
+                            'size': FileSize.remote_file(src_link)
+                        }
+                    
                     elif link_type == 'doi':
                         article_links['doi'] = link_href
                         
                     else:
                         article_links['page'] = link_href
-                        
+                
                 article_data['links'] = article_links
 
                 article_data['date'] = {
@@ -114,12 +122,13 @@ class ArxivBuild:
             results_data['status_code'] = response.status_code
             
         if Settings.get('general.calculate_request_time', 'BOOLEAN'):
-            results_data['calculate_request_time'] = self.calculate_request_time(start_time, end_time)
+            results_data['calculate_request_time'] = ArxivUtils.calculate_request_time(start_time, end_time)
 
         return json.dumps(results_data, indent = 2)
 
     @classmethod
     def get_xml(self, search: str, max_results: int) -> object:
         json_data = self.get_json(search, max_results)
-        xml_data = StrUtils.json_to_xml(json_data)   
-        return ET.tostring(xml_data, encoding = 'unicode')
+        dict_data = json.loads(json_data)
+        xml_data = StrUtils.json_to_xml(dict_data)   
+        return ET.tostring(xml_data, encoding='unicode')
