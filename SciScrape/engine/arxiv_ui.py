@@ -11,6 +11,7 @@ from configs.env import Env
 from configs.settings import Settings
 
 from engine.arxiv_build import ArxivBuild
+from engine.arxiv_download import ArxivDownload
 
 console = Console()
 
@@ -28,3 +29,4 @@ class ArxivUI:
         console.print("-" * 60)
         
         print_json(json_data)
+        ArxivDownload.make_download(json_data)

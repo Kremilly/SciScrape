@@ -112,6 +112,7 @@ class ArxivBuild:
                 
             results_data = {
                 'articles': articles,
+                'search_term': search,
                 'total': len(articles),
                 'status_code': response.status_code,
             }

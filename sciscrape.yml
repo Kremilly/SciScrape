@@ -5,16 +5,19 @@ general:
   default_user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36' # String
 
 results:
-  auto_download_papers: true # Boolean
   show_max_authors: 5 # Integer (unsigned)
   show_max_categories: 5 # Integer (unsigned)
   default_max_results: 5 # Integer (unsigned)
+
+downloads:
+  auto_open_folder: false # Boolean
+  auto_download_papers: true # Boolean
+  downloads_folder: './data/papers' # String
 
 output:
   json_indent_size: 2 # Integer (unsigned)
   default_format: 'json' # String
   output_dest: './data/history' # String
-  downloads_folder: './data/papers' # String
 
 layout:
   show_icons: true # Boolean
