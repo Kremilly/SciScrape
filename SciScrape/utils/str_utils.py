@@ -20,20 +20,19 @@ class StrUtils:
         ).decode('utf-8')
         
     @classmethod
-    def json_to_xml(self, data):
+    def json_to_xml(self, data: json) -> ET:
         root = ET.Element('root')
         
         for key, value in data.items():
+            sub_element = ET.SubElement(root, key)
+            
             if isinstance(value, dict):
-                sub_element = ET.SubElement(root, key)
                 sub_element.append(self.json_to_xml(value))
                 
             elif isinstance(value, list):
                 for item in value:
-                    sub_element = ET.SubElement(root, key)
                     sub_element.append(self.json_to_xml(item))
             else:
-                sub_element = ET.SubElement(root, key)
                 sub_element.text = str(value)
 
         return root

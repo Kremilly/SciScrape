@@ -16,7 +16,7 @@ class ArxivUtils:
         ) + ' ms'
         
     @classmethod
-    def get_pdf_page_count(self, url: str):
+    def get_pdf_page_count(self, url: str) -> int|None:
         response = requests.get(url)
         
         if response.status_code == 200:

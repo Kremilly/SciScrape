@@ -16,10 +16,11 @@ class Icons:
     TITLE = "📚"
     WARNING = "⚠️"
     ERROR = "❌"
+    STATS = "📊"
 
     @classmethod
-    def get(self, icon):
+    def get(self, icon: str) -> str:
         if Settings.get('layout.show_icons', 'BOOLEAN'):
             return self[icon.upper()]
-        else:
-            return f"[{icon.capitalize().replace('_', ' ')}]"
+        
+        return f"[{icon.capitalize().replace('_', ' ')}]"
