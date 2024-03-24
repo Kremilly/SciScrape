@@ -2,6 +2,7 @@
 
 import json, time, requests
 
+import xml.dom.minidom
 import xml.etree.ElementTree as ET
 
 from utils.str_utils import StrUtils
@@ -11,6 +12,7 @@ from configs.settings import Settings
 from configs.build_urls import BuildUrls
 
 from engine.arxiv_utils import ArxivUtils
+from engine.arxiv_bibtex import ArxivBibTex
 
 class ArxivBuild:
     
@@ -32,7 +34,7 @@ class ArxivBuild:
         return requests.get(url, headers=headers)
     
     @classmethod
-    async def get_json(self, search: str, max_results: int) -> object:
+    def get_json(self, search: str, max_results: int) -> object:
         start_time = time.time()
         response = self.make_request(search, max_results)
         end_time = time.time()
@@ -57,7 +59,7 @@ class ArxivBuild:
                         'url': BuildUrls.author_page_link(author)
                     } for author in [
                         author.find('{http://www.w3.org/2005/Atom}name').text for author in el_authors
-                    ]
+                    ][:Settings.get('results.show_max_authors', 'INT')]
                 ]
 
                 el_categories = entry.findall('{http://www.w3.org/2005/Atom}category')
@@ -67,7 +69,7 @@ class ArxivBuild:
                         'url': BuildUrls.category_search_link(category)
                     } for category in [
                         category.get('term') for category in el_categories
-                    ]
+                    ][:Settings.get('results.show_max_categories', 'INT')]
                 ]
 
                 summary = entry.find('{http://www.w3.org/2005/Atom}summary').text
@@ -78,6 +80,7 @@ class ArxivBuild:
                 for link in entry.findall('{http://www.w3.org/2005/Atom}link'):
                     link_type = link.get('title')
                     link_href = link.get('href')
+                    article_data['eprint'] = link_href.split('/pdf/')[-1]
                     
                     if link_type == 'pdf':
                         pdf_link = link_href + '.pdf'
@@ -107,6 +110,9 @@ class ArxivBuild:
                     'published': entry.find('{http://www.w3.org/2005/Atom}published').text,
                     'updated': entry.find('{http://www.w3.org/2005/Atom}updated').text
                 }
+                
+                if Settings.get('results.auto_generate_bibtex', 'BOOLEAN'):
+                    article_data['bibtex'] = ArxivBibTex.get(article_data)
 
                 articles.append(article_data)
                 
@@ -131,5 +137,12 @@ class ArxivBuild:
         
         dict_data = json.loads(json_data)
         xml_data = StrUtils.json_to_xml(dict_data)
+        xml_string = ET.tostring(xml_data, encoding='unicode')
+        dom = xml.dom.minidom.parseString(xml_string)
         
-        return ET.tostring(xml_data, encoding='unicode')
+        indent_size = Settings.get('output.json_indent_size', 'INT')
+        return dom.toprettyxml(indent=" " * indent_size)
+    
+    @classmethod
+    def get(self, search: str, max_results: int) -> object:
+        return self.get_json(search, max_results), self.get_xml(search, max_results)
