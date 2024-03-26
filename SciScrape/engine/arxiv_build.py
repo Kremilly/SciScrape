@@ -31,7 +31,7 @@ class ArxivBuild:
         if Settings.get('general.disable_cache', 'BOOLEAN'):
             headers['Cache-Control'] = 'no-cache'
         
-        return requests.get(url, headers=headers)
+        return requests.get(url, headers = headers)
     
     @classmethod
     def get_json(self, search: str, max_results: int) -> object:
@@ -120,15 +120,14 @@ class ArxivBuild:
                 'articles': articles,
                 'search_term': search,
                 'total': len(articles),
-                'status_code': response.status_code,
             }
-        else:
-            results_data['status_code'] = response.status_code
+            
+        results_data['status_code'] = response.status_code
             
         if Settings.get('general.calculate_request_time', 'BOOLEAN'):
             results_data['calculate_request_time'] = ArxivUtils.calculate_request_time(start_time, end_time)
 
-        indent_size = Settings.get('output.json_indent_size', 'INT')
+        indent_size = Settings.get('general.json_indent_size', 'INT')
         return json.dumps(results_data, indent = indent_size)
 
     @classmethod
@@ -140,8 +139,8 @@ class ArxivBuild:
         xml_string = ET.tostring(xml_data, encoding='unicode')
         dom = xml.dom.minidom.parseString(xml_string)
         
-        indent_size = Settings.get('output.json_indent_size', 'INT')
-        return dom.toprettyxml(indent=" " * indent_size)
+        indent_size = Settings.get('general.json_indent_size', 'INT')
+        return dom.toprettyxml(indent = " " * indent_size)
     
     @classmethod
     def get(self, search: str, max_results: int) -> object:

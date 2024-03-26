@@ -3,6 +3,7 @@ general:
   disable_cache: false # Boolean
   format_date: '%Y-%m-%d' # String
   calculate_request_time: true # Boolean
+  json_indent_size: 2 # Integer (unsigned)
   default_user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36' # String
 
 results:
@@ -16,9 +17,9 @@ downloads:
   auto_download_papers: false # Boolean
   downloads_folder: './data/papers' # String
 
-output:
-  json_indent_size: 2 # Integer (unsigned)
+history:
   default_format: 'json' # String
+  auto_save_history: false # Boolean
   output_folder: './data/history' # String
 
 layout:

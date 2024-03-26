@@ -2,7 +2,7 @@
 
 class Env:
     
-    VERSION = '0.0.3'
+    VERSION = '0.0.5'
     APP_NAME = 'SciScrape'
     CONFIGS_FILE = './sciscrape.yml'
     HOMEPAGE = 'https://github.com/Kremilly/SciScrape'
@@ -10,3 +10,5 @@ class Env:
     BASE_URL = 'http://arxiv.org/'
     SEARCH_BASE = f'{BASE_URL}search'
     API_BASE = f"{BASE_URL.replace('//', '//export.')}api/"
+    
+    RANDOM_STR = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'

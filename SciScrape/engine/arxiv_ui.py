@@ -11,6 +11,7 @@ from layout.layout import Layout
 from configs.settings import Settings
 
 from engine.arxiv_build import ArxivBuild
+from engine.arxiv_history import ArxivHistory
 from engine.arxiv_download import ArxivDownload
 
 console = Console()
@@ -19,7 +20,7 @@ class ArxivUI:
     
     @classmethod
     def get_visual_mode(self, json_data: json):
-        print('hello')
+        print('TODO')
 
     @classmethod
     def run(self, search: str, max_results: int):
@@ -28,4 +29,6 @@ class ArxivUI:
         Layout.header()
         
         print_json(json_data)
+        
         ArxivDownload.make_download(json_data)
+        ArxivHistory.export(json_data, xml_data)
