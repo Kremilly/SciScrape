@@ -30,5 +30,5 @@ class ArxivUI:
         
         print_json(json_data)
         
-        ArxivDownload.make_download(json_data)
-        ArxivHistory.export(json_data, xml_data)
+        ArxivDownload.download(json_data)
+        ArxivHistory.save(json_data, xml_data)

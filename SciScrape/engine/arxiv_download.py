@@ -22,7 +22,7 @@ class ArxivDownload:
             return False
     
     @classmethod
-    def make_download(self, json_data: json) -> None:
+    def download(self, json_data: json) -> None:
         if Settings.get('downloads.auto_download_papers', 'BOOLEAN'):
             json_data = json.loads(json_data)
             cwd_path = Settings.get('downloads.downloads_folder', 'STRING')
