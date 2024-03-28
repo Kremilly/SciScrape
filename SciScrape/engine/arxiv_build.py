@@ -7,11 +7,12 @@ import xml.etree.ElementTree as ET
 
 from utils.str_utils import StrUtils
 from utils.file_size import FileSize
+from utils.pdf_utils import PdfUtils
+from utils.time_utils import TimeUtils
 
 from configs.settings import Settings
 from configs.build_urls import BuildUrls
 
-from engine.arxiv_utils import ArxivUtils
 from engine.arxiv_bibtex import ArxivBibTex
 
 class ArxivBuild:
@@ -90,7 +91,7 @@ class ArxivBuild:
                             'url': pdf_link,
                             'name': pdf_link.split('/')[-1],
                             'size': FileSize.remote_file(pdf_link),
-                            'pages': ArxivUtils.get_pdf_page_count(pdf_link),
+                            'pages': PdfUtils.get_pdf_page_count(pdf_link),
                         }
                         
                         article_links['src'] = {
@@ -125,7 +126,7 @@ class ArxivBuild:
         results_data['status_code'] = response.status_code
             
         if Settings.get('general.calculate_request_time', 'BOOLEAN'):
-            results_data['calculate_request_time'] = ArxivUtils.calculate_request_time(start_time, end_time)
+            results_data['calculate_request_time'] = TimeUtils.calculate_request_time(start_time, end_time)
 
         indent_size = Settings.get('general.json_indent_size', 'INT')
         return json.dumps(results_data, indent = indent_size)

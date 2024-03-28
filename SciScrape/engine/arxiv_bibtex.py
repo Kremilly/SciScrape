@@ -13,7 +13,7 @@ class ArxivBibTex:
     }}"""
     
     @classmethod
-    def get(self, json_data):
+    def get(self, json_data: dict):
         authors = []
 
         for author in json_data['authors']:

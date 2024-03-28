@@ -1,20 +1,25 @@
 #!/usr/bin/python3
 
-import time, requests
+import os, requests
 
 from PyPDF2 import PdfReader
 from tempfile import NamedTemporaryFile
 
-class ArxivUtils:
-    
+class PdfUtils:
+
     @classmethod
-    def calculate_request_time(self, start_time: time, end_time: time) -> str:
-        elapsed_time_seconds = end_time - start_time
+    def download_pdf(self, url: str, filename: str, path: str) -> bool:
+        response = requests.get(url)
+        full_path = os.path.join(path, filename)
+    
+        if response.status_code == 200:
+            with open(full_path, 'wb') as f:
+                f.write(response.content)
+            
+            return True
         
-        return str(
-            round(elapsed_time_seconds * 1000)
-        ) + ' ms'
-        
+        return False
+
     @classmethod
     def get_pdf_page_count(self, url: str) -> int|None:
         response = requests.get(url)
@@ -26,5 +31,5 @@ class ArxivUtils:
                 pdf_file = PdfReader(temp_file.name)
             
             return len(pdf_file.pages)
-        else:
-            return None
+            
+        return None

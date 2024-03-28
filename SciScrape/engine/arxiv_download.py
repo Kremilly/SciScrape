@@ -1,25 +1,13 @@
 #!/usr/bin/python3
 
-import os, json, requests
+import os, json
 
 from configs.settings import Settings
 
+from utils.pdf_utils import PdfUtils
 from utils.file_utils import FileUtils
 
 class ArxivDownload:
-    
-    @classmethod
-    def download_pdf(self, url: str, filename: str, path: str) -> bool:
-        response = requests.get(url)
-        full_path = os.path.join(path, filename)
-    
-        if response.status_code == 200:
-            with open(full_path, 'wb') as f:
-                f.write(response.content)
-            
-            return True
-        else:
-            return False
     
     @classmethod
     def download(self, json_data: json) -> None:
@@ -33,7 +21,7 @@ class ArxivDownload:
                 
                 for article in articles:
                     url, name = article['links']['pdf']['url'], article['links']['pdf']['name']
-                    self.download_pdf(url, name, path)
+                    PdfUtils.download_pdf(url, name, path)
                     
             if Settings.get('downloads.auto_open_folder', 'BOOLEAN'):
                 os.startfile(path)

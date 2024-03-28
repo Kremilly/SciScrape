@@ -23,6 +23,7 @@ class Settings:
         line_position = self.search_property_in_file(property)
         
         if open_file:
+            line_position = line_position.split(' -> ')[0]
             return f"{configs_file}:{line_position}"
         
         return f"Please fix it in: {configs_file.replace('./', '')}:{line_position}"
