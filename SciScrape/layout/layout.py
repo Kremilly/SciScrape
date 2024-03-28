@@ -18,9 +18,5 @@ class Layout:
         if Settings.get('layout.show_header', 'BOOLEAN'):
             app_name = pyfiglet.figlet_format(Env.APP_NAME)
             
-            if Settings.get('layout.show_colors', 'BOOLEAN'):
-                console.print(f"[red]{app_name}[/red]")
-            else:
-                print(app_name)
-            
+            console.print(f"[red]{app_name}[/red]")
             console.print("-" * 60)

@@ -24,6 +24,5 @@ history:
 
 layout:
   show_icons: true # Boolean
-  show_colors: true # Boolean
   show_header: true # Boolean
   default_mode: 'visual' # String
