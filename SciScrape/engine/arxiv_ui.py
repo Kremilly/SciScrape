@@ -66,6 +66,10 @@ class ArxivUI:
                 console.print(f" - Published: {TimeUtils.clean_date(article['date']['published'])}")
                 console.print(f" - Updated: {TimeUtils.clean_date(article['date']['updated'])}")
                 
+                if 'bibtex' in article:
+                    console.print(f"> {Icons.get('bibtex')} BibText")
+                    console.print(f" - {article['bibtex']}")
+                
                 console.print("-" * 60)
 
     @classmethod
