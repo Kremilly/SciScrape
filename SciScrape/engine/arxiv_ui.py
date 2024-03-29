@@ -27,6 +27,7 @@ class ArxivUI:
         json_data = json.loads(json_data)
         
         console.print(f"{Icons.get('timer')} Request time: {json_data['calculate_request_time']} | "
+                      f"{Icons.get('search')} Search: [green]{json_data['search_term']}[/green] | "
                       f"{Icons.get('stats')} Status code {json_data['status_code']} | "
                       f"{Icons.get('total')} Total of articles: {json_data['total']}")
         
@@ -49,7 +50,7 @@ class ArxivUI:
                 console.print(f"> {Icons.get('user')} Authors")
                 for author in article['authors']:
                     console.print(f" - [blue bold][link={author['url']}]{author['name']}[/link][/blue bold]")
-                    
+                
                 console.print(f"> {Icons.get('tag')}  Categories")
                 for category in article['categories']:
                     console.print(f" - [blue bold][link={category['url']}]{category['name']}[/link][/blue bold]")
@@ -84,7 +85,7 @@ class ArxivUI:
                 print_json(json_data)
                 
             case 'xml':
-                print(xml_data)
+                console.print(xml_data)
                 
             case 'visual':
                 self.get_visual_mode(json_data)

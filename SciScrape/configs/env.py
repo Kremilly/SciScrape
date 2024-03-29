@@ -2,7 +2,9 @@
 
 class Env:
     
+    LICENSE = 'MIT'
     VERSION = '0.0.5'
+    AUTHOR = 'Kremilly'
     APP_NAME = 'SciScrape'
     CONFIGS_FILE = './sciscrape.yml'
     HOMEPAGE = 'https://github.com/Kremilly/SciScrape'

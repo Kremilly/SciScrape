@@ -20,6 +20,9 @@ class Icons:
     TIMER = "⏰"
     TOTAL  = "🔢"
     BIBTEX = "📑"
+    VERSION = "🔖"
+    HOME  = "🏠"
+    LICENSE = "📜"
 
     @classmethod
     def get(self, icon: str) -> str:
