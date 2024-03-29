@@ -33,12 +33,11 @@ Basic usage:
 python sciscrape -s '_YOUR_SEARCH_' -max 5
 ```
 
-> *To change the mode, edit the [sciscrape.yml](blob/main/sciscrape.yml) file*
+> *To change the mode, edit the [sciscrape.yml](/sciscrape.yml) file*
 
 ## 📦 Dependencies
 
 * pyfiglet
-* Pygments
 * PyPDF2
 * PyYAML
 * requests
@@ -47,4 +46,4 @@ python sciscrape -s '_YOUR_SEARCH_' -max 5
 
 ## 📝 License
 
-Code licensed under [MIT License](blob/main/LICENSE)
+Code licensed under [MIT License](/LICENSE)
