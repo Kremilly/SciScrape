@@ -13,7 +13,7 @@
 
 ## 🚀 Getting Started
 
-* Clone this repositoy
+* Clone this repository
 
 ```shell
 git clone https://github.com/kremilly/sciscrape.git
@@ -33,25 +33,17 @@ Basic usage:
 python sciscrape -s '_YOUR_SEARCH_' -max 5
 ```
 
-> *To change the mode, edit the [sciscrape.yml](https://raw.githubusercontent.com/kremilly/SciScrape/main/sciscrape.yml) file*
+> *To change the mode, edit the [sciscrape.yml](blob/main/sciscrape.yml) file*
 
 ## 📦 Dependencies
 
-* certifi
-* charset-normalizer
-* feedparser
-* idna
-* markdown-it-py
-* mdurl
 * pyfiglet
 * Pygments
 * PyPDF2
 * PyYAML
 * requests
 * rich
-* sgmllib3k
 * Unidecode
-* urllib3
 
 ## 📝 License
 
