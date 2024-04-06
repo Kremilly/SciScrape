@@ -8,9 +8,9 @@ from configs.settings import Settings
 class FileUtils:
 
     @classmethod
-    def make_file(self, path: str, content, format: str):
+    def make_file(cls, path: str, content, fmt: str):
         with open(path, 'w') as f:
-            if format == 'json':
+            if fmt == 'json':
                 if isinstance(content, str):
                     f.write(content)
                 else:
@@ -19,14 +19,14 @@ class FileUtils:
                 f.write(content)
     
     @classmethod
-    def make_folder(self, path: str, search: str = None, add_date: bool = True) -> str:
+    def make_folder(cls, path: str, search: str = None, add_date: bool = True) -> str:
         folder = path
         
-        if add_date == True:
+        if add_date:
             fmt_date = Settings.get('general.format_date', 'STRING')
             folder = os.path.join(folder, date.today().strftime(fmt_date))
         
-        if search != None:
+        if search is not None:
             folder = os.path.join(folder, search)
         
         os.makedirs(folder, exist_ok=True)        

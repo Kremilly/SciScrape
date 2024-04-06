@@ -8,7 +8,7 @@ from tempfile import NamedTemporaryFile
 class PdfUtils:
 
     @classmethod
-    def download_pdf(self, url: str, filename: str, path: str) -> bool:
+    def download_pdf(cls, url: str, filename: str, path: str) -> bool:
         response = requests.get(url)
         full_path = os.path.join(path, filename)
     
@@ -21,7 +21,7 @@ class PdfUtils:
         return False
 
     @classmethod
-    def get_pdf_page_count(self, url: str) -> int|None:
+    def get_pdf_page_count(cls, url: str) -> int|None:
         response = requests.get(url)
         
         if response.status_code == 200:

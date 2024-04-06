@@ -13,14 +13,14 @@ from exceptions.arxiv_exception import ArxivException
 class ArxivHistory:
 
     @classmethod
-    def save(self, json_data: json, xml_data: ET):
+    def save(cls, json_data: json, xml_data: ET):
         if Settings.get('history.auto_save_history', 'BOOLEAN'):
             json_data_str = json.loads(json_data)
             cwd_path = Settings.get('history.output_folder', 'STRING')
             default_format = Settings.get('history.default_format', 'STRING')
             full_path = FileUtils.make_folder(cwd_path, json_data_str['search_term']) + '/' + TimeUtils.get_current_time()
 
-            match (default_format):
+            match default_format:
                 case 'xml':
                     FileUtils.make_file(full_path + '.xml', xml_data, 'xml')
                 case 'json':

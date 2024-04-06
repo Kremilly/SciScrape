@@ -6,13 +6,13 @@ import xml.etree.ElementTree as ET
 class StrUtils:
     
     @classmethod
-    def clean_string(self, string):
+    def clean_string(cls, string):
         return string.replace(
             '\n', ''
         ).strip()
     
     @classmethod
-    def fix_unicode_name(self, name):
+    def fix_unicode_name(cls, name):
         return unicodedata.normalize(
             'NFD', name
         ).encode(
@@ -20,18 +20,18 @@ class StrUtils:
         ).decode('utf-8')
         
     @classmethod
-    def json_to_xml(self, data: json) -> ET:
+    def json_to_xml(cls, data: json) -> ET:
         root = ET.Element('root')
         
         for key, value in data.items():
             sub_element = ET.SubElement(root, key)
             
             if isinstance(value, dict):
-                sub_element.append(self.json_to_xml(value))
+                sub_element.append(cls.json_to_xml(value))
                 
             elif isinstance(value, list):
                 for item in value:
-                    sub_element.append(self.json_to_xml(item))
+                    sub_element.append(cls.json_to_xml(item))
             else:
                 sub_element.text = str(value)
 

@@ -3,7 +3,7 @@
 class ArxivBibTex:
     
     @classmethod
-    def generate_bibtex(self, data: dict) -> str:
+    def generate_bibtex(cls, data: dict) -> str:
         return f"""@misc{{{data['id']},
         title={{ {data['title']} }},
         author={{ {' and '.join(data['authors'])} }},
@@ -13,13 +13,13 @@ class ArxivBibTex:
     }}"""
     
     @classmethod
-    def get(self, json_data: dict):
+    def get(cls, json_data: dict):
         authors = []
 
         for author in json_data['authors']:
             authors.append(author['name'])
         
-        return self.generate_bibtex({
+        return cls.generate_bibtex({
             'authors': authors,
             'id': json_data['id'],
             'title': json_data['title'],

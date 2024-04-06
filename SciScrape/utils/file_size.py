@@ -2,25 +2,28 @@
 
 import os, requests
 
+
 class FileSize:
 
     @classmethod
-    def format(self, bytes, units=[ ' bytes','KB','MB','GB','TB', 'PB', 'EB' ]):
-        return str(bytes) + units[0] if bytes < 1024 else self.format(
-            bytes >> 10, units[1:]
+    def format(cls, size, units=None):
+        if units is None:
+            units = [' bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+        return str(size) + units[0] if size < 1024 else cls.format(
+            size >> 10, units[1:]
         )
 
     @classmethod
-    def local_file(self, file):
+    def local_file(cls, file):
         file_size = os.stat(file)
-        return self.format(file_size.st_size)
+        return cls.format(file_size.st_size)
 
     @classmethod
-    def remote_file(self, url):
+    def remote_file(cls, url):
         try:
             req_headers = requests.get(url)
-            
-            return self.format(
+
+            return cls.format(
                 int(req_headers.headers["Content-Length"])
             )
         except:

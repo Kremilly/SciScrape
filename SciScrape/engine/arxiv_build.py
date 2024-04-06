@@ -18,7 +18,7 @@ from engine.arxiv_bibtex import ArxivBibTex
 class ArxivBuild:
     
     @classmethod
-    def make_request(self, search: str, max_results: int) -> object:
+    def make_request(cls, search: str, max_results: int) -> object:
         headers = {}
         default_user_agent = Settings.get('general.default_user_agent', 'STRING')
         
@@ -35,9 +35,9 @@ class ArxivBuild:
         return requests.get(url, headers = headers)
     
     @classmethod
-    def get_json(self, search: str, max_results: int) -> object:
+    def get_json(cls, search: str, max_results: int) -> object:
         start_time = time.time()
-        response = self.make_request(search, max_results)
+        response = cls.make_request(search, max_results)
         end_time = time.time()
 
         if response.status_code == 200:
@@ -45,13 +45,12 @@ class ArxivBuild:
             articles = []
 
             for entry in root.findall('{http://www.w3.org/2005/Atom}entry'):
-                article_data = {}
-                
-                article_data['id'] = entry.find('{http://www.w3.org/2005/Atom}id').text.split('/')[-1]
-
-                article_data['title'] = StrUtils.clean_string(
-                    entry.find('{http://www.w3.org/2005/Atom}title').text
-                )
+                article_data = {
+                    'id': entry.find('{http://www.w3.org/2005/Atom}id').text.split('/')[-1],
+                    'title': StrUtils.clean_string(
+                        entry.find('{http://www.w3.org/2005/Atom}title').text
+                    )
+                }
 
                 el_authors = entry.findall('{http://www.w3.org/2005/Atom}author')
                 article_data['authors'] = [
@@ -132,8 +131,8 @@ class ArxivBuild:
         return json.dumps(results_data, indent = indent_size)
 
     @classmethod
-    def get_xml(self, search: str, max_results: int) -> object:
-        json_data = self.get_json(search, max_results)
+    def get_xml(cls, search: str, max_results: int) -> object:
+        json_data = cls.get_json(search, max_results)
         
         dict_data = json.loads(json_data)
         xml_data = StrUtils.json_to_xml(dict_data)
@@ -144,5 +143,5 @@ class ArxivBuild:
         return dom.toprettyxml(indent = " " * indent_size)
     
     @classmethod
-    def get(self, search: str, max_results: int) -> object:
-        return self.get_json(search, max_results), self.get_xml(search, max_results)
+    def get(cls, search: str, max_results: int) -> object:
+        return cls.get_json(search, max_results), cls.get_xml(search, max_results)

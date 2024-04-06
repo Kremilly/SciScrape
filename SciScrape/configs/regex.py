@@ -10,7 +10,7 @@ class Regex:
     BOOLEAN_TYPE = r"^(?i)(true|false)$"
 
     @classmethod
-    def is_valid(self, value, regex):
+    def is_valid(cls, value, regex):
         return re.match(
-            self[regex.upper()], value
+            cls[regex.upper()], value
         ) is not None

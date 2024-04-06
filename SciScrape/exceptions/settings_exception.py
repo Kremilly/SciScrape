@@ -4,7 +4,7 @@ import traceback
 
 class SettingsException(Exception):
     
-    def __init__(self, message):
-        self.message = message
+    def __init__(cls, message):
+        cls.message = message
         super().__init__(message)
         traceback.print_exc()

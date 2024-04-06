@@ -18,15 +18,15 @@ class Icons:
     ERROR = "❌"
     STATS = "📊"
     TIMER = "⏰"
-    TOTAL  = "🔢"
+    TOTAL = "🔢"
     BIBTEX = "📑"
     VERSION = "🔖"
-    HOME  = "🏠"
+    HOME = "🏠"
     LICENSE = "📜"
 
     @classmethod
-    def get(self, icon: str) -> str:
+    def get(cls, icon: str) -> str:
         if Settings.get('layout.show_icons', 'BOOLEAN'):
-            return getattr(self, icon.upper())
+            return getattr(cls, icon.upper())
         
         return f"[{icon.capitalize().replace('_', ' ')}]"

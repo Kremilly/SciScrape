@@ -7,7 +7,7 @@ from configs.env import Env
 class GenerateUtils:
     
     @classmethod
-    def random_string(self, size: int) -> str:
+    def random_string(cls, size: int) -> str:
         output_str = ''
         random_str_seq = Env.RANDOM_STR
         
