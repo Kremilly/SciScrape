@@ -3,7 +3,7 @@
 class Env:
     
     LICENSE = 'MIT'
-    VERSION = '0.0.5'
+    VERSION = '0.0.6'
     AUTHOR = 'Kremilly'
     APP_NAME = 'SciScrape'
     CONFIGS_FILE = './sciscrape.yml'
