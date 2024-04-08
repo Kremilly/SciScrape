@@ -2,7 +2,7 @@
 
 import yaml
 
-from configs.env import Env
+from helper.env import Env
 
 from exceptions.settings_exception import SettingsException
 

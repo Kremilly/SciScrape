@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from configs.env import Env
+from helper.env import Env
 from configs.settings import Settings
 
 class BuildUrls:

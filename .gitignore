@@ -164,3 +164,6 @@ cython_debug/
 
 # Folders of data
 data/*
+
+# Ignore venv path
+project/

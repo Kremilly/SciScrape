@@ -2,7 +2,7 @@
 
 import random
 
-from configs.env import Env
+from helper.env import Env
 
 class GenerateUtils:
     

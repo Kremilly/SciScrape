@@ -30,7 +30,7 @@ pip install -r requirements.txt
 Basic usage:
 
 ```shell
-python sciscrape -s '_YOUR_SEARCH_' -max 5
+python sciscrape -s '_YOUR_SEARCH_' -m 5
 ```
 
 > *To change the mode, edit the [sciscrape.yml](/sciscrape.yml) file*
