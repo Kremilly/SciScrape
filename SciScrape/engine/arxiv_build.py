@@ -32,7 +32,7 @@ class ArxivBuild:
         if Settings.get('general.disable_cache', 'BOOLEAN'):
             headers['Cache-Control'] = 'no-cache'
         
-        return requests.get(url, headers = headers)
+        return requests.get(url, headers=headers)
     
     @classmethod
     def get_json(cls, search: str, max_results: int) -> object:
@@ -140,7 +140,7 @@ class ArxivBuild:
         dom = xml.dom.minidom.parseString(xml_string)
         
         indent_size = Settings.get('general.json_indent_size', 'INT')
-        return dom.toprettyxml(indent = " " * indent_size)
+        return dom.toprettyxml(indent=' ' * indent_size)
     
     @classmethod
     def get(cls, search: str, max_results: int) -> object:

@@ -5,7 +5,7 @@ import argparse
 class Flags:
     
     @classmethod
-    def parser(cls, desc, arguments):
+    def parser(cls, desc: str, arguments: dict) -> dict:
         parser = argparse.ArgumentParser(description=desc)
 
         for arg in arguments:

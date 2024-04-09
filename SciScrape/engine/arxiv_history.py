@@ -23,8 +23,12 @@ class ArxivHistory:
             match default_format:
                 case 'xml':
                     FileUtils.make_file(full_path + '.xml', xml_data, 'xml')
+                    
                 case 'json':
                     FileUtils.make_file(full_path + '.json', json_data, 'json')
+                    
                 case _:
                     wrong_property_position = Settings.get_wrong_property_position('default_format')
-                    raise ArxivException(f"Invalid history file format. It should be either XML or JSON. {wrong_property_position}.")
+                    
+                    raise ArxivException(f"Invalid history file format. "
+                                         f"It should be either XML or JSON. {wrong_property_position}.")

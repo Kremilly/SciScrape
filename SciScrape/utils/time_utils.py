@@ -13,7 +13,7 @@ class TimeUtils:
         return current_time.strftime("%H-%M-%S")
     
     @classmethod
-    def clean_date(cls, date):
+    def clean_date(cls, date: datetime):
         original_date = datetime.strptime(date, '%Y-%m-%dT%H:%M:%SZ')
         date_time = Settings.get('general.format_date', 'STRING') + ' %H:%M:%S'
         return original_date.strftime(date_time)

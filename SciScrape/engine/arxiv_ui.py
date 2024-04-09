@@ -92,6 +92,7 @@ class ArxivUI:
 
             case _:
                 wrong_property_position = Settings.get_wrong_property_position('default_mode')
+                
                 raise SettingsException(f"Invalid layout default mode. It should be either JSON, XML or Visual." 
                                         f"{wrong_property_position}.")
 

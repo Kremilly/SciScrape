@@ -7,7 +7,7 @@ from configs.settings import Settings
 
 default_max_results = Settings.get('results.default_max_results', 'INT')
 
-flags = Flags.parser("Usage: python sciscrape -s 'astronomy' -max 5", [
+flags = Flags.parser("Usage: python sciscrape -s 'astronomy' -m 5", [
     {'short': 's', 'long': 'search', 'help': 'Search of articles', 'required': True},
     {'short': 'm', 'long': 'max-results', 'help': 'Maximium of results', 'required': False, 'default': default_max_results},
 ])

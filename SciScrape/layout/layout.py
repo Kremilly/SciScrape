@@ -7,6 +7,7 @@ from rich.console import Console
 from layout.icons import Icons
 
 from helper.env import Env
+
 from configs.settings import Settings
 
 console = Console()
