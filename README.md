@@ -28,7 +28,7 @@ Basic usage:
 python sciscrape -s '_YOUR_SEARCH_' -m 5
 ```
 
-> [!note]
+> [!important]
 > *To change the mode, edit the [sciscrape.yml](/sciscrape.yml) file*
 
 ## 📦 Dependencies
