@@ -2,13 +2,13 @@
 
 import os, requests
 
-
 class FileSize:
 
     @classmethod
     def format(cls, size, units=None):
         if units is None:
             units = [' bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+        
         return str(size) + units[0] if size < 1024 else cls.format(
             size >> 10, units[1:]
         )
