@@ -6,6 +6,9 @@
     Download papers on arxiv.org using Python
 </div><br>
 
+> [!important]
+> This repository is currently paused and will only receive security updates and bug fixes.
+
 ## 🚀 Getting Started
 
 Clone this repository
